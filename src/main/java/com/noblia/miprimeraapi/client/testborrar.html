@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Persona</title>
+    <title>Eliminar Persona</title>
 </head>
 <body>
     <h1>Eliminar Persona</h1>
@@ -13,7 +13,7 @@
         document.getElementById('eliminar').addEventListener('click', () => {
             const id = 1; // ID de la persona que deseas eliminar
 
-            fetch(`http://localhost:8080/personas/${id}`, { // URL de tu API para eliminar persona
+            fetch(`http://localhost:8080/api/Ps/${id}`, {
                 method: 'DELETE'
             })
             .then(response => {

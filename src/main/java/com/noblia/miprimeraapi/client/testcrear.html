@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Persona</title>
+    <title>Crear Persona</title>
 </head>
 <body>
     <h1>Crear Persona</h1>
@@ -11,15 +11,13 @@
 
     <script>
         document.getElementById('crear').addEventListener('click', () => {
-            // Definir el JSON que deseas enviar
             const persona = {
                 nombre: "Juan",
                 edad: 30,
-                ciudad: "Madrid"
+                email: "juan@example.com"
             };
 
-            // Realizar la solicitud fetch
-            fetch('http://localhost:8080/personas', { // URL de tu API para crear persona
+            fetch('http://localhost:8080/api/Ps', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

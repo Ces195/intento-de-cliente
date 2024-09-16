@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Persona</title>
+    <title>Actualizar Persona</title>
 </head>
 <body>
     <h1>Actualizar Persona</h1>
@@ -15,10 +15,10 @@
             const persona = {
                 nombre: "Carlos",
                 edad: 35,
-                ciudad: "Barcelona"
+                email: "carlos@example.com"
             };
 
-            fetch(`http://localhost:8080/personas/${id}`, { // URL de tu API para actualizar persona
+            fetch(`http://localhost:8080/api/Ps/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
