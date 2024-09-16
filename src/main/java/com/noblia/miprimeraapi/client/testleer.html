@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Persona</title>
+</head>
+<body>
+    <h1>Leer Personas</h1>
+    <button id="leer">Leer Personas</button>
+
+    <script>
+        document.getElementById('leer').addEventListener('click', () => {
+            fetch('http://localhost:8080/personas') // URL de tu API para obtener todas las personas
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Personas:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</body>
+</html>

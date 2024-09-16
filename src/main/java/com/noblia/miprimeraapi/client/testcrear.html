@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Persona</title>
+</head>
+<body>
+    <h1>Crear Persona</h1>
+    <button id="crear">Crear Persona</button>
+
+    <script>
+        document.getElementById('crear').addEventListener('click', () => {
+            // Definir el JSON que deseas enviar
+            const persona = {
+                nombre: "Juan",
+                edad: 30,
+                ciudad: "Madrid"
+            };
+
+            // Realizar la solicitud fetch
+            fetch('http://localhost:8080/personas', { // URL de tu API para crear persona
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(persona)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Persona creada:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

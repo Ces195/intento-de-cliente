@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Persona</title>
+</head>
+<body>
+    <h1>Actualizar Persona</h1>
+    <button id="actualizar">Actualizar Persona</button>
+
+    <script>
+        document.getElementById('actualizar').addEventListener('click', () => {
+            const id = 1; // ID de la persona que deseas actualizar
+            const persona = {
+                nombre: "Carlos",
+                edad: 35,
+                ciudad: "Barcelona"
+            };
+
+            fetch(`http://localhost:8080/personas/${id}`, { // URL de tu API para actualizar persona
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(persona)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Persona actualizada:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
