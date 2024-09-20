@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .pedido-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        select, input[type="number"], input[type="text"], button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        // Función para obtener los artículos desde la API
+        async function obtenerArticulos() {
+            try {
+                const respuesta = await fetch('https://localhost:8080/ADNoblia/Comercio-Server/src/main/java/com/noblia/server/controller//api/productos'); // Cambia la URL de la API
+                const articulos = await respuesta.json();
+
+                const selectArticulo = document.getElementById('articulo');
+
+                // Poblamos el select con los artículos recibidos de la API
+                articulos.forEach(articulo => {
+                    const option = document.createElement('option');
+                    option.value = articulo.id; // Usamos el ID del artículo
+                    option.text = articulo.nombre; // Mostramos el nombre del artículo
+                    selectArticulo.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error al obtener los artículos:', error);
+            }
+        }
+
+        // Función para obtener los detalles del artículo usando su ID
+        async function actualizarPrecio() {
+            const selectArticulo = document.getElementById('articulo');
+            const articuloId = selectArticulo.value;
+
+            if (articuloId) {
+                try {
+                    // Realizamos una petición para obtener los datos del artículo basado en su ID
+                    const respuesta = await fetch(`https://localhost:8080/ADNoblia/Comercio-Server/src/main/java/com/noblia/server/controller//api/productos/${articuloId}`); // Cambia la URL de la API
+                    const articulo = await respuesta.json();
+
+                    // Colocamos el precio en el campo correspondiente
+                    document.getElementById('precio').value = articulo.precio;
+
+                    // Actualizamos el total con la cantidad y precio actual
+                    actualizarTotal();
+                } catch (error) {
+                    console.error('Error al obtener el precio:', error);
+                }
+            }
+        }
+
+        // Función para calcular el total basado en la cantidad y el precio
+        function actualizarTotal() {
+            const precio = parseFloat(document.getElementById('precio').value);
+            const cantidad = parseInt(document.getElementById('cantidad').value);
+            const total = precio * cantidad;
+            document.getElementById('total').value = total.toFixed(2); // Redondear a 2 decimales
+        }
+
+        // Cargar los artículos cuando la página se carga
+        window.onload = obtenerArticulos;
+    </script>
+</head>
+<body>
+
+    <div class="pedido-container">
+        <h1>Cargar Pedido</h1>
+        <form>
+            <label for="articulo">Artículo</label>
+            <select id="articulo" onchange="actualizarPrecio()">
+                <option value="">Selecciona un artículo</option>
+                <!-- Opciones serán pobladas dinámicamente desde la API -->
+            </select>
+
+            <label for="precio">Precio</label>
+            <input type="text" id="precio" readonly>
+
+            <label for="cantidad">Cantidad</label>
+            <input type="number" id="cantidad" value="1" min="1" onchange="actualizarTotal()">
+
+            <label for="total">Total</label>
+            <input type="text" id="total" readonly>
+
+            <button type="submit">Cargar Pedido</button>
+        </form>
+    </div>
+
+</body>
+</html>
