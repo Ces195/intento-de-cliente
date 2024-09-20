@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="myForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="txtnom" name="txtnombre" placeholder="Ingresa tu nombre" required>
+
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="txtdir" name="txtdir" placeholder="Ingresa tu dirección" required>
+
+        <label for="telefono">Número de Teléfono:</label>
+        <input type="text" id="txtnum" name="txtnum" placeholder="Ingresa tu número de teléfono" required>
+
+        <input type="submit" value="Enviar">
+    </form>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita que el formulario se envíe de la manera estándar
+
+            // Obtener los valores de los campos del formulario
+            const nombre = document.getElementById('txtnom').value;
+            const direccion = document.getElementById('txtdir').value;
+            const telefono = document.getElementById('txtnum').value;
+
+            // Crear un objeto con los datos
+            const datos = {
+                nombre: nombre,
+                direccion: direccion,
+                telefono: telefono
+            };
+
+            // Enviar los datos como JSON usando fetch
+            fetch('https://tuservidor.com/api/endpoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Éxito:', data);
+                alert('Datos enviados correctamente');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al enviar los datos');
+            });
+        });
+    </script>
+
+</body>
+</html>
