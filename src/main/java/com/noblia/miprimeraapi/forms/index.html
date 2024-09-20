@@ -3,15 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu inicial</title>
+    <title>Menu con Tabla de Datos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+            text-align: left;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 12px;
+        }
+        th {
+            background-color: #28a745;
+            color: white;
         }
         .button-container {
             text-align: center;
@@ -31,16 +49,72 @@
         }
     </style>
     <script>
+        // Función para redirigir a otra página
         function redirigir(pagina) {
             window.location.href = pagina;
         }
+
+        // Función para obtener datos desde la API y mostrarlos en la tabla
+        async function obtenerDatos() {
+            try {
+                const respuesta = await fetch('https://localhost:8080/ADNoblia/Comercio-Server/src/main/java/com/noblia/server/controller/api/productos'); // Cambia la URL a tu API
+                const datos = await respuesta.json();
+
+                const tabla = document.getElementById('tabla-datos');
+                const tbody = document.getElementById('tabla-body');
+
+                // Limpiar cuerpo de la tabla por si hay datos previos
+                tbody.innerHTML = '';
+
+                // Iterar sobre los datos y crear filas para la tabla
+                datos.forEach(dato => {
+                    const fila = document.createElement('tr');
+
+                    // Crear celdas y asignar los valores de la API
+                    const celdaNombre = document.createElement('td');
+                    celdaNombre.textContent = dato.nombre; // Asegúrate de usar los campos correctos según tu API
+                    fila.appendChild(celdaNombre);
+
+                    const celdaDireccion = document.createElement('td');
+                    celdaDireccion.textContent = dato.direccion;
+                    fila.appendChild(celdaDireccion);
+
+                    const celdaTelefono = document.createElement('td');
+                    celdaTelefono.textContent = dato.telefono;
+                    fila.appendChild(celdaTelefono);
+
+                    // Agregar la fila a la tabla
+                    tbody.appendChild(fila);
+                });
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        }
+
+        // Llamar a la función para obtener datos cuando la página se cargue
+        window.onload = obtenerDatos;
     </script>
 </head>
 <body>
 
     <div class="button-container">
-        <h1>Elige una opción</h1>
+        <h1>Tabla de Clientes</h1>
+
         <button onclick="redirigir('../src/main/java/com/noblia/miprimeraapi/forms/cliente.html')">Crear cliente</button>
+
+        <!-- Tabla donde se mostrarán los datos -->
+        <table id="tabla-datos">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-body">
+                <!-- Las filas de datos serán insertadas aquí mediante JavaScript -->
+            </tbody>
+        </table>
     </div>
 
 </body>
