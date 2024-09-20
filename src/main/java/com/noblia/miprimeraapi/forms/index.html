@@ -57,7 +57,7 @@
         // Función para obtener datos desde la API y mostrarlos en la tabla
         async function obtenerDatos() {
             try {
-                const respuesta = await fetch('https://localhost:8080/ADNoblia/Comercio-Server/src/main/java/com/noblia/server/controller/api/productos'); // Cambia la URL a tu API
+                const respuesta = await fetch('https://localhost:8080/ADNoblia/Comercio-Server/src/main/java/com/noblia/server/controller/api/productos');
                 const datos = await respuesta.json();
 
                 const tabla = document.getElementById('tabla-datos');
@@ -71,17 +71,17 @@
                     const fila = document.createElement('tr');
 
                     // Crear celdas y asignar los valores de la API
-                    const celdaNombre = document.createElement('td');
-                    celdaNombre.textContent = dato.nombre; // Asegúrate de usar los campos correctos según tu API
-                    fila.appendChild(celdaNombre);
+                    const celdaid = document.createElement('td');
+                    celdaid.textContent = dato.id; // Asegúrate de usar los campos correctos según tu API
+                    fila.appendChild(celdaid);
 
-                    const celdaDireccion = document.createElement('td');
-                    celdaDireccion.textContent = dato.direccion;
-                    fila.appendChild(celdaDireccion);
+                    const celdadescripcion = document.createElement('td');
+                    celdadescripcion.textContent = dato.desccripcion;
+                    fila.appendChild(celdadescripcion);
 
-                    const celdaTelefono = document.createElement('td');
-                    celdaTelefono.textContent = dato.telefono;
-                    fila.appendChild(celdaTelefono);
+                    const celdaprecio = document.createElement('td');
+                    celdaprecio.textContent = dato.precio;
+                    fila.appendChild(celdaprecio);
 
                     // Agregar la fila a la tabla
                     tbody.appendChild(fila);
@@ -106,9 +106,9 @@
         <table id="tabla-datos">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
+                    <th>id</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
                 </tr>
             </thead>
             <tbody id="tabla-body">
